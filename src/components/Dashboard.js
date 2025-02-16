@@ -2,10 +2,10 @@ import React from "react";
 import DashboardLayout from "./DashboardLayout";
 import Navbar from "./Navbar";
 import SensorCard from "./SensorCard";
+import HeartRateChart from "./HeartRateChart";
 import { Grid } from "@mui/material";
 
 const Dashboard = () => {
-  // Dummy sensor data (Replace with real-time data from Firebase)
   const sensorData = [
     { title: "Heart Rate", value: 75, unit: "BPM", status: "Normal" },
     { title: "Temperature", value: 37.2, unit: "°C", status: "Normal" },
@@ -24,6 +24,13 @@ const Dashboard = () => {
               <SensorCard {...sensor} />
             </Grid>
           ))}
+        </Grid>
+
+        {/* Add Graph Below */}
+        <Grid container spacing={3} sx={{ marginTop: 3 }}>
+          <Grid item xs={12} md={6}>
+            <HeartRateChart />
+          </Grid>
         </Grid>
       </DashboardLayout>
     </>
