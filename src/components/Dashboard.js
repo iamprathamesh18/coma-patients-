@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DashboardLayout from "./DashboardLayout";
 import Navbar from "./Navbar";
 import SensorCard from "./SensorCard";
-import HeartRateChart from "./HeartRateChart";
+import SensorTabs from "./SensorTabs";
 import AlertNotification from "./AlertNotification";
 import { Grid } from "@mui/material";
 
@@ -17,10 +17,9 @@ const Dashboard = () => {
   const [alert, setAlert] = useState({ open: false, message: "", severity: "info" });
 
   useEffect(() => {
-    // Simulating sensor value updates every 5 seconds
     const interval = setInterval(() => {
-      const newHeartRate = Math.floor(Math.random() * (130 - 60 + 1)) + 60; // Random BPM between 60-130
-      const newTemperature = (36 + Math.random() * 4).toFixed(1); // Between 36°C and 40°C
+      const newHeartRate = Math.floor(Math.random() * (130 - 60 + 1)) + 60;
+      const newTemperature = (36 + Math.random() * 4).toFixed(1);
 
       let alertMessage = "";
       let alertSeverity = "info";
@@ -61,12 +60,8 @@ const Dashboard = () => {
           ))}
         </Grid>
 
-        {/* Graph Section */}
-        <Grid container spacing={3} sx={{ marginTop: 3 }}>
-          <Grid item xs={12} md={6}>
-            <HeartRateChart />
-          </Grid>
-        </Grid>
+        {/* Tabs Section */}
+        <SensorTabs />
 
         {/* Alert Component */}
         <AlertNotification open={alert.open} message={alert.message} severity={alert.severity} onClose={() => setAlert({ ...alert, open: false })} />
