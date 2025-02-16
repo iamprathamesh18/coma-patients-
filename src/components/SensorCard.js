@@ -1,21 +1,27 @@
 import React from "react";
-import { Card, CardContent, CardHeader, Typography, Chip } from "@mui/material";
+import { Card, CardContent, Typography, Chip } from "@mui/material";
+import { motion } from "framer-motion";
 
-const SensorCard = ({ title, value, unit, status }) => {
+const SensorCard = ({ title, value, status }) => {
   return (
-    <Card sx={{ minWidth: 275, textAlign: "center", borderRadius: 2, boxShadow: 3 }}>
-      <CardHeader title={title} />
-      <CardContent>
-        <Typography variant="h4" color="primary">
-          {value} {unit}
-        </Typography>
-        <Chip
-          label={status}
-          color={status === "Normal" ? "success" : "error"}
-          sx={{ marginTop: 1, fontSize: "1rem" }}
-        />
-      </CardContent>
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Card sx={{ minWidth: 250, textAlign: "center", p: 2, m: 1 }}>
+        <CardContent>
+          <Typography variant="h6">{title}</Typography>
+          <Typography variant="h4" sx={{ fontWeight: "bold", my: 1 }}>
+            {value}
+          </Typography>
+          <Chip
+            label={status}
+            color={status === "Critical" ? "error" : "success"}
+          />
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
 
