@@ -3,6 +3,7 @@ import { Box, Tabs, Tab, Typography } from "@mui/material";
 import LogsAccordion from "./LogsAccordion";
 import HeartRateChart from "./HeartRateChart";
 import TemperatureChart from "./TemperatureChart"; 
+import EyeMotionChart from "./EyeMotionChart"; 
 
 const SensorTabs = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -16,7 +17,7 @@ const SensorTabs = () => {
       <Tabs value={tabIndex} onChange={handleChange} centered>
         <Tab label="Heart Rate" />
         <Tab label="Temperature" />
-        <Tab label="Motion & Eye Movement" />
+        <Tab label="Eye Motion" />
         <Tab label="Logs" />
       </Tabs>
 
@@ -33,7 +34,12 @@ const SensorTabs = () => {
             <TemperatureChart />  {/* Added TemperatureChart here */}
           </Box>
         )}
-        {tabIndex === 2 && <Typography variant="h6">Motion & Eye Movement Data Coming Soon...</Typography>}
+        {tabIndex === 2 && (
+          <Box>
+            <Typography variant="h6">Eye motion Readings</Typography>
+            <EyeMotionChart />  {/* Added TemperatureChart here */}
+          </Box>
+        )}
         {tabIndex === 3 && <LogsAccordion />}
       </Box>
     </Box>
