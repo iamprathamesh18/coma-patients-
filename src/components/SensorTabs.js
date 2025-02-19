@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Box, Tabs, Tab, Typography } from "@mui/material";
-import LogsAccordion from "./LogsAccordion";
+
 import HeartRateChart from "./HeartRateChart";
 import TemperatureChart from "./TemperatureChart"; 
 import EyeMotionChart from "./EyeMotionChart"; 
+import MotionBarChart from "./MotionBarChart"; // Bar Chart
+import MotionAreaChart from "./MotionAreaChart"; // Stacked Area Chart
+import MotionScatterChart from "./MotionScatterChart"; // Scatter Plot
 
 const SensorTabs = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -18,7 +21,8 @@ const SensorTabs = () => {
         <Tab label="Heart Rate" />
         <Tab label="Temperature" />
         <Tab label="Eye Motion" />
-        <Tab label="Logs" />
+        <Tab label="Body movement" />
+        
       </Tabs>
 
       <Box sx={{ mt: 2, p: 2 }}>
@@ -40,7 +44,14 @@ const SensorTabs = () => {
             <EyeMotionChart />  {/* Added TemperatureChart here */}
           </Box>
         )}
-        {tabIndex === 3 && <LogsAccordion />}
+        {tabIndex === 3 && (
+          <Box>
+            <Typography variant="h6">Body movement Readings</Typography>
+            <MotionBarChart />
+            <MotionAreaChart />
+            <MotionScatterChart />  {/* Added TemperatureChart here */}
+          </Box>
+        )}
       </Box>
     </Box>
   );
