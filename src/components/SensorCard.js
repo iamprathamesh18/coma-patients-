@@ -5,14 +5,15 @@ import { motion } from "framer-motion";
 const SensorCard = ({ title, value, status }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
+      whileHover={{ scale: 1.05 }}
     >
       <Card sx={{ minWidth: 250, textAlign: "center", p: 2, m: 1 }}>
         <CardContent>
           <Typography variant="h6">{title}</Typography>
-          <Typography variant="h4" sx={{ fontWeight: "bold", my: 1 }}>
+          <Typography variant="h4" color="primary">
             {value}
           </Typography>
           <Chip
