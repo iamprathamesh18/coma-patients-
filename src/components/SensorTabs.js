@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Tabs, Tab, Typography } from "@mui/material";
 import LogsAccordion from "./LogsAccordion";
 import HeartRateChart from "./HeartRateChart";
+import TemperatureChart from "./TemperatureChart"; 
 
 const SensorTabs = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -26,7 +27,12 @@ const SensorTabs = () => {
             <HeartRateChart />
           </Box>
         )}
-        {tabIndex === 1 && <Typography variant="h6">Temperature Data Coming Soon...</Typography>}
+         {tabIndex === 1 && (
+          <Box>
+            <Typography variant="h6">Temperature Readings</Typography>
+            <TemperatureChart />  {/* Added TemperatureChart here */}
+          </Box>
+        )}
         {tabIndex === 2 && <Typography variant="h6">Motion & Eye Movement Data Coming Soon...</Typography>}
         {tabIndex === 3 && <LogsAccordion />}
       </Box>
