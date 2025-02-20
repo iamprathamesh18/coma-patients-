@@ -1,6 +1,6 @@
 // Import Firebase SDK
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 // Your Firebase Configuration
 const firebaseConfig = {
@@ -18,4 +18,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-export { database };
+export { database, ref, onValue };

@@ -5,6 +5,7 @@ import SensorCard from "./SensorCard";
 import SensorTabs from "./SensorTabs";
 import AlertNotification from "./AlertNotification";
 import { Grid } from "@mui/material";
+import { database, ref, onValue } from "../firebaseConfig"; // Import Firebase
 
 const Dashboard = () => {
   const [sensorData, setSensorData] = useState([
@@ -17,34 +18,43 @@ const Dashboard = () => {
   const [alert, setAlert] = useState({ open: false, message: "", severity: "info" });
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newHeartRate = Math.floor(Math.random() * (130 - 60 + 1)) + 60;
-      const newTemperature = (36 + Math.random() * 4).toFixed(1);
+    const heartRateRef = ref(database, "sensors/heartRate");
+    const tempRef = ref(database, "sensors/temperature");
 
-      let alertMessage = "";
-      let alertSeverity = "info";
+    const updateHeartRate = onValue(heartRateRef, (snapshot) => {
+      const newHeartRate = snapshot.val();
+      setSensorData((prevData) =>
+        prevData.map((sensor) =>
+          sensor.title === "Heart Rate"
+            ? { ...sensor, value: newHeartRate, status: newHeartRate > 120 ? "Critical" : "Normal" }
+            : sensor
+        )
+      );
 
       if (newHeartRate > 120) {
-        alertMessage = `Critical Heart Rate Detected: ${newHeartRate} BPM!`;
-        alertSeverity = "error";
-      } else if (newTemperature > 39) {
-        alertMessage = `High Temperature Alert: ${newTemperature}°C!`;
-        alertSeverity = "warning";
+        setAlert({ open: true, message: `Critical Heart Rate: ${newHeartRate} BPM!`, severity: "error" });
       }
+    });
 
-      if (alertMessage) {
-        setAlert({ open: true, message: alertMessage, severity: alertSeverity });
+    const updateTemperature = onValue(tempRef, (snapshot) => {
+      const newTemperature = snapshot.val();
+      setSensorData((prevData) =>
+        prevData.map((sensor) =>
+          sensor.title === "Temperature"
+            ? { ...sensor, value: newTemperature, status: newTemperature > 39 ? "High" : "Normal" }
+            : sensor
+        )
+      );
+
+      if (newTemperature > 39) {
+        setAlert({ open: true, message: `High Temperature: ${newTemperature}°C!`, severity: "warning" });
       }
+    });
 
-      setSensorData([
-        { title: "Heart Rate", value: newHeartRate, unit: "BPM", status: newHeartRate > 120 ? "Critical" : "Normal" },
-        { title: "Temperature", value: newTemperature, unit: "°C", status: newTemperature > 39 ? "High" : "Normal" },
-        { title: "Motion Detection", value: "No Motion", unit: "", status: "Normal" },
-        { title: "Eye Movement", value: "Active", unit: "", status: "Normal" },
-      ]);
-    }, 5000);
-
-    return () => clearInterval(interval);
+    return () => {
+      updateHeartRate();
+      updateTemperature();
+    };
   }, []);
 
   return (
