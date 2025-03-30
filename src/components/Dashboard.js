@@ -4,7 +4,8 @@ import Navbar from "./Navbar";
 import SensorCard from "./SensorCard";
 import SensorTabs from "./SensorTabs";
 import AlertNotification from "./AlertNotification";
-import EyeBlinkState from "./EyeBlinkState"; // ✅ Import Eye Blink Component
+import EyeBlinkState from "./EyeBlinkState"; 
+import MotionLive from "./MotionLive"; // ✅ Import Motion Detection Card
 import { Grid } from "@mui/material";
 import { database, ref, onValue } from "../firebaseConfig"; // Import Firebase
 
@@ -12,7 +13,6 @@ const Dashboard = () => {
   const [sensorData, setSensorData] = useState([
     { title: "Heart Rate", value: 75, unit: "BPM", status: "Normal" },
     { title: "Temperature", value: 37.2, unit: "°C", status: "Normal" },
-    { title: "Motion Detection", value: "No Motion", unit: "", status: "Normal" },
   ]);
 
   const [alert, setAlert] = useState({ open: false, message: "", severity: "info" });
@@ -72,6 +72,11 @@ const Dashboard = () => {
           {/* ✅ Display Eye Blink State */}
           <Grid item xs={12} sm={6} md={3}>
             <EyeBlinkState />
+          </Grid>
+
+          {/* ✅ Display Motion Detection */}
+          <Grid item xs={12} sm={6} md={3}>
+            <MotionLive />
           </Grid>
         </Grid>
 
